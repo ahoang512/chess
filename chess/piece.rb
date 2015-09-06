@@ -29,6 +29,10 @@ class Piece
     false
   end
 
+  def king?
+    false
+  end
+
 end
 
 
@@ -179,6 +183,10 @@ class King < SteppingPiece
   def initialize(position, board, color, moved = false)
     super(position , board, color, moved)
     @value = " K "
+  end
+
+  def king?
+    true
   end
 
   #Refactor into class constant

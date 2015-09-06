@@ -33,11 +33,14 @@ class Board
   end
 
   def populate_board
+    #first fill the board with empty pieces
     grid.length.times do |row_idx|
       grid.length.times do |col_idx|
         grid[row_idx][col_idx] = EmptyPiece.new()
       end
     end
+
+    # make the default rows and assign
     grid[0] = generate_start_row(:black)
     grid[1] = generate_pawns(:black)
     grid[6] = generate_pawns(:white)
@@ -46,26 +49,18 @@ class Board
 
   def generate_pawns(color)
     pawns = []
-
-    if color == :white
-      row = 6
-    else
-      row = 1
-    end
+    row = color == :white ? 6 : 1
 
     8.times do |x|
       pawns << Pawn.new([row,x],self, color, false)
     end
+
     pawns
   end
 
   def generate_start_row(color)
     row = []
-    if color == :white
-      row_idx = 7
-    else
-      row_idx = 0
-    end
+    row_index = color == :white ? 7 : 0
     row << Rook.new([row_idx,0], self,color)
     row << Knight.new([row_idx,1], self, color)
     row << Bishop.new([row_idx,2], self, color)
@@ -86,7 +81,7 @@ class Board
     grid.each_with_index do |row, row_idx|
       row.each_with_index do |piece, col_idx|
         # Use duck typing
-        if piece.is_a?(King) && piece.color == color
+        if piece.king? && piece.color == color
           return [row_idx,col_idx]
         end
       end
@@ -107,53 +102,59 @@ class Board
   end
 
   def in_check?(color)
-    threaten_positions =  []
+    unsafe_positions =  []
     king_position = get_king_position(color)
     opponent_color = (color == :black) ? :white : :black
 
     get_all_pieces(opponent_color).each do |piece|
-      threaten_positions += piece.moves
+      unsafe_positions += piece.moves
     end
-    # Condense into one line
-    return true if threaten_positions.include?(king_position)
-    false
+
+    unsafe_positions.include?(king_position)
   end
 
   def checkmate?(color)
     get_all_pieces(color).each do |piece|
       piece.moves.each do |move|
+        #duplicate the board
         check_board = self.dup
+        #make the current move on the new board
         check_board.move(piece.position, move)
+        # check if there is a safe move to make
         return false unless check_board.in_check?(color)
       end
     end
+
     true
   end
 
   def dup
-    new_board = Board.new(false)
+    new_board = Board.new(false) #don't repopulate the board
+
     grid.length.times do |row_idx|
       grid.length.times do |col_idx|
           current_piece = self[[row_idx, col_idx]]
+          #duplicate the pieces for a deep dup
           new_piece = current_piece.dup(new_board)
           new_board.grid[row_idx][col_idx] = new_piece
       end
     end
+
     new_board
   end
 
   def get_out_of_check(current_piece)
-    allowable_moves = current_piece.moves
+    possible_moves = current_piece.moves
 
     current_piece.moves.each do |move|
       check_board = self.dup
       check_board.move(current_piece.position, move)
       if check_board.in_check?(current_piece.color)
-        allowable_moves.delete(move)
+        possible_moves.delete(move)
       end
     end
 
-    allowable_moves
+    possible_moves
   end
 
 end
