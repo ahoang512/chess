@@ -1,4 +1,4 @@
-
+require 'byebug'
 
 class Piece
   attr_reader :value, :position, :board, :color
@@ -20,7 +20,14 @@ class Piece
     self.class.new(new_position, new_board, color, @moved)
   end
 
+  def update_moved
+    #do nothing if not a pawn
+  end
 
+  def empty?
+    #false because this is a piece
+    false
+  end
 
 end
 
@@ -31,6 +38,11 @@ class EmptyPiece
   def initialize
     @value = "   "
     @color = :blue
+  end
+
+  def empty?
+    #true because this is a place holder
+    true
   end
 
   def dup(board)
@@ -112,11 +124,17 @@ class Pawn < Piece
     @value = " P "
   end
 
+  def update_moved
+    moved = true
+  end
+
   def moves
     final_move_set = []
     move_dirs.each do |new_pos|
+
       if new_pos[1] == position[1] #moving up/down
         #move is allowed if new_pos is unoccupied
+
         final_move_set << new_pos unless board.occupied?(new_pos)
 
       else #move diagonal

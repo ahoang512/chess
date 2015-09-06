@@ -42,10 +42,10 @@ class Display
   end
 
   def colors_for(i, j)
-    #board.get_piece([i,j]).selected
+
     highlight_coords = []
     if @selected
-      highlight_coords = board.get_out_of_check(board.get_piece(@selected))
+      highlight_coords = board.get_out_of_check(board[@selected])
     end
 
       if [i, j] == @cursor_pos

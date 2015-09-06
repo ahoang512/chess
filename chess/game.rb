@@ -44,7 +44,7 @@ class Game
 
     begin
       start_pos = player.get_move
-      if (board.get_piece(start_pos).color != player.color)
+      if (board[start_pos].color != player.color)
         raise InvalidMoveError.new("Not your piece!")
       end
     rescue InvalidMoveError => e
@@ -61,7 +61,7 @@ class Game
 
 
   def valid_move?(start_pos, end_pos)
-    current_piece = board.get_piece(start_pos)
+    current_piece = board[start_pos]
 
     # get current_piece.moves if in_check? remove moves that still result
     #in_check

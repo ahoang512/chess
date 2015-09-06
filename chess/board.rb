@@ -12,25 +12,22 @@ class Board
   def move(start, end_pos)
     x_start, y_start = start
     x_end, y_end = end_pos
-    piece = get_piece(start)
 
-    # Delegate to piece class
-    piece.moved = true if piece.is_a?(Pawn)
+    piece = self[start]
+    piece.update_moved #for the pawn class
 
     grid[x_end][y_end] = piece
     piece.update_pos(end_pos)
+
     grid[x_start][y_start] = EmptyPiece.new
   end
 
   def occupied?(pos)
     x, y = pos
-    # Duck type use .empty?
-    return true if grid[x][y].is_a?(Piece)
-    false
+    return !grid[x][y].empty?
   end
 
-  #Rename to []
-  def get_piece(pos)
+  def [](pos)
     x,y = pos
     return grid[x][y]
   end
@@ -137,7 +134,7 @@ class Board
     new_board = Board.new(false)
     grid.length.times do |row_idx|
       grid.length.times do |col_idx|
-          current_piece = get_piece([row_idx, col_idx])
+          current_piece = self[[row_idx, col_idx]]
           new_piece = current_piece.dup(new_board)
           new_board.grid[row_idx][col_idx] = new_piece
       end

@@ -27,9 +27,5 @@ class Player
     move
   end
 
-  # def valid_piece?(pos)
-  #   return false if pos.nil?
-  #   board.get_piece(pos).color == color
-  # end
 
 end
