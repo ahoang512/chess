@@ -52,6 +52,10 @@ class EmptyPiece
   def dup(board)
     EmptyPiece.new
   end
+
+  def king?
+    false
+  end
 end
 
 class SlidingPiece < Piece

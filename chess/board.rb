@@ -60,7 +60,7 @@ class Board
 
   def generate_start_row(color)
     row = []
-    row_index = color == :white ? 7 : 0
+    row_idx = color == :white ? 7 : 0
     row << Rook.new([row_idx,0], self,color)
     row << Knight.new([row_idx,1], self, color)
     row << Bishop.new([row_idx,2], self, color)
