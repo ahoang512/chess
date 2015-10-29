@@ -23,7 +23,6 @@ class Game
 
       rescue InvalidMoveError => e
         puts e.message
-        sleep(3)
         retry
       end
     end
@@ -50,7 +49,6 @@ class Game
     rescue InvalidMoveError => e
       display.reset_selected
       puts e.message
-      sleep(1)
       retry
     end
 

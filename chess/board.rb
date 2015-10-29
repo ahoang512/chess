@@ -15,7 +15,6 @@ class Board
 
     piece = self[start]
     piece.update_moved #for the pawn class
-
     grid[x_end][y_end] = piece
     piece.update_pos(end_pos)
 
@@ -144,6 +143,7 @@ class Board
   end
 
   def get_out_of_check(current_piece)
+    return [] if current_piece.empty?
     possible_moves = current_piece.moves
 
     current_piece.moves.each do |move|

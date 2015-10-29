@@ -129,11 +129,11 @@ class Pawn < Piece
 
   def initialize(position, board, color, moved = false)
     super(position , board, color, moved)
-    @value = " P "
+    @value = " ♙ "
   end
 
   def update_moved
-    moved = true
+    @moved = true
   end
 
   def moves
@@ -146,10 +146,10 @@ class Pawn < Piece
         final_move_set << new_pos unless board.occupied?(new_pos)
 
       else #move diagonal
+        #move is allowed if new_pos is occupied
         final_move_set << new_pos if board.occupied?(new_pos) &&
           self.color != board.grid[new_pos[0]][new_pos[1]].color
 
-        #move is allowed if new_pos is occupied
       end
     end
     final_move_set
@@ -186,7 +186,7 @@ end
 class King < SteppingPiece
   def initialize(position, board, color, moved = false)
     super(position , board, color, moved)
-    @value = " K "
+    @value = " ♔ "
   end
 
   def king?
@@ -202,7 +202,7 @@ end
 class Knight < SteppingPiece
   def initialize(position, board, color, moved = false)
     super(position , board, color, moved)
-    @value = " N "
+    @value = " ♘ "
   end
 
   #Refactor into class constant
@@ -214,7 +214,7 @@ end
 class Rook < SlidingPiece
   def initialize(position, board, color, moved = false)
     super(position , board, color, moved)
-    @value = " R "
+    @value = " ♖ "
   end
 
   #Refactor into class constant
@@ -227,7 +227,7 @@ end
 class Bishop < SlidingPiece
   def initialize(position, board, color, moved = false)
     super(position , board, color, moved)
-    @value = " B "
+    @value = " ♗ "
   end
 
   #Refactor into class constant
@@ -239,7 +239,7 @@ end
 class Queen < SlidingPiece
   def initialize(position, board, color, moved = false)
     super(position , board, color)
-    @value = " Q "
+    @value = " ♕ "
   end
 
   #Refactor into class constant
