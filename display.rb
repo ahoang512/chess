@@ -50,7 +50,7 @@ class Display
 
       if [i, j] == @cursor_pos
         #@selected ? bg = :light_red : bg = :yellow
-        bg = :yellow
+        bg = :orange
       elsif highlight_coords.include?([i,j])
         bg = :magenta
       elsif [i, j] == @selected #&& board.grid[i][j].is_a?(Piece)
