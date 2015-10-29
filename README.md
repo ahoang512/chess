@@ -1,6 +1,8 @@
 # Ruby implementation of chess for console.
 
-To try the game out. Download the repo and run the command ruby game.rb in the console.
+## Demo instructions : 
+
+Download the repo and run the command ruby game.rb in the console.
 
 Use arrow keys to navigate and space to select. 
 Have fun!
